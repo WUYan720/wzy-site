@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn - 现代课程学习平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <div class="bg-primary text-white p-2 rounded-lg">
+                    <i class="fa fa-graduation-cap text-xl"></i>
+                </div>
+                <span class="text-xl font-bold text-primary">EduLearn</span>
+            </a>
+            
+            <!-- 桌面导航 -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="font-medium hover:text-primary transition-colors">首页</a>
+                <a href="#courses" class="font-medium hover:text-primary transition-colors">课程</a>
+                <a href="#paths" class="font-medium hover:text-primary transition-colors">学习路径</a>
+                <a href="#testimonials" class="font-medium hover:text-primary transition-colors">学员评价</a>
+                <a href="#faq" class="font-medium hover:text-primary transition-colors">常见问题</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hidden md:block px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">登录</a>
+                <a href="#" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">注册</a>
+                <!-- 移动端菜单按钮 -->
+                <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#" class="py-2 font-medium hover:text-primary transition-colors">首页</a>
+                <a href="#courses" class="py-2 font-medium hover:text-primary transition-colors">课程</a>
+                <a href="#paths" class="py-2 font-medium hover:text-primary transition-colors">学习路径</a>
+                <a href="#testimonials" class="py-2 font-medium hover:text-primary transition-colors">学员评价</a>
+                <a href="#faq" class="py-2 font-medium hover:text-primary transition-colors">常见问题</a>
+                <a href="#" class="py-2 font-medium hover:text-primary transition-colors">登录</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section class="pt-28 pb-16 md:pt-32 md:pb-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow">
+                        提升技能，<br>
+                        <span class="text-primary">开启</span> 学习之旅
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 text-gray-600">
+                        探索我们精心设计的课程，由行业专家打造，助您实现职业目标，掌握未来所需的技能。
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#courses" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-center font-medium">
+                            浏览课程
+                        </a>
+                        <a href="#paths" class="px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors text-center font-medium">
+                            查看学习路径
+                        </a>
+                    </div>
+                    <div class="mt-10 flex items-center space-x-4">
+                        <div class="flex -space-x-2">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20student%20avatar%201&image_size=square" alt="学员" class="w-10 h-10 rounded-full border-2 border-white">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20student%20avatar%202&image_size=square" alt="学员" class="w-10 h-10 rounded-full border-2 border-white">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20student%20avatar%203&image_size=square" alt="学员" class="w-10 h-10 rounded-full border-2 border-white">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20student%20avatar%204&image_size=square" alt="学员" class="w-10 h-10 rounded-full border-2 border-white">
+                        </div>
+                        <div>
+                            <p class="text-gray-600"><span class="font-bold">10,000+</span> 学员已加入</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern%20online%20learning%20platform%20dashboard%20with%20courses%20and%20progress%20tracker&image_size=landscape_16_9" alt="在线学习平台" class="rounded-xl shadow-xl w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程分类 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">探索课程分类</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">选择适合您的学习领域，开启专业技能提升之旅</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-blue-50 p-6 rounded-xl card-hover">
+                    <div class="bg-blue-100 text-primary p-4 rounded-lg inline-block mb-4">
+                        <i class="fa fa-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">编程开发</h3>
+                    <p class="text-gray-600 mb-4">掌握最新的编程语言和开发技术</p>
+                    <a href="#" class="text-primary font-medium flex items-center">
+                        浏览课程 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-green-50 p-6 rounded-xl card-hover">
+                    <div class="bg-green-100 text-secondary p-4 rounded-lg inline-block mb-4">
+                        <i class="fa fa-line-chart text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">数据分析</h3>
+                    <p class="text-gray-600 mb-4">学习数据处理和分析技能，挖掘数据价值</p>
+                    <a href="#" class="text-secondary font-medium flex items-center">
+                        浏览课程 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-purple-50 p-6 rounded-xl card-hover">
+                    <div class="bg-purple-100 text-purple-600 p-4 rounded-lg inline-block mb-4">
+                        <i class="fa fa-paint-brush text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">设计创意</h3>
+                    <p class="text-gray-600 mb-4">提升设计技能，创造引人注目的视觉作品</p>
+                    <a href="#" class="text-purple-600 font-medium flex items-center">
+                        浏览课程 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-amber-50 p-6 rounded-xl card-hover">
+                    <div class="bg-amber-100 text-amber-600 p-4 rounded-lg inline-block mb-4">
+                        <i class="fa fa-briefcase text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">商业管理</h3>
+                    <p class="text-gray-600 mb-4">学习商业策略和管理技能，提升职业竞争力</p>
+                    <a href="#" class="text-amber-600 font-medium flex items-center">
+                        浏览课程 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 热门课程 -->
+    <section id="courses" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">热门课程</h2>
+                    <p class="text-gray-600">由行业专家打造的高质量课程</p>
+                </div>
+                <a href="#" class="hidden md:block px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                    查看全部
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 课程卡片 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="relative">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=web%20development%20course%20cover%20modern%20design&image_size=landscape_4_3" alt="Web开发课程" class="w-full h-48 object-cover">
+                        <div class="absolute top-4 right-4 bg-primary text-white text-sm font-medium px-3 py-1 rounded-full">
+                            畅销
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-500">编程开发</span>
+                            <div class="flex items-center">
+                                <i class="fa fa-star text-yellow-400"></i>
+                                <span class="ml-1 font-medium">4.9</span>
+                                <span class="ml-1 text-gray-500">(1,245)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">现代Web开发从入门到精通</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-2">学习HTML、CSS、JavaScript和现代前端框架，成为专业Web开发者</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20instructor%20avatar%20male&image_size=square" alt="讲师" class="w-10 h-10 rounded-full mr-3">
+                                <span class="font-medium">张教授</span>
+                            </div>
+                            <span class="text-xl font-bold text-primary">¥299</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 课程卡片 2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="relative">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=data%20analysis%20course%20cover%20modern%20design&image_size=landscape_4_3" alt="数据分析课程" class="w-full h-48 object-cover">
+                        <div class="absolute top-4 right-4 bg-secondary text-white text-sm font-medium px-3 py-1 rounded-full">
+                            新课
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-500">数据分析</span>
+                            <div class="flex items-center">
+                                <i class="fa fa-star text-yellow-400"></i>
+                                <span class="ml-1 font-medium">4.8</span>
+                                <span class="ml-1 text-gray-500">(876)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Python数据分析与可视化</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-2">使用Python进行数据处理、分析和可视化，掌握数据驱动决策能力</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20instructor%20avatar%20female&image_size=square" alt="讲师" class="w-10 h-10 rounded-full mr-3">
+                                <span class="font-medium">李博士</span>
+                            </div>
+                            <span class="text-xl font-bold text-primary">¥399</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 课程卡片 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="relative">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ui%20ux%20design%20course%20cover%20modern%20design&image_size=landscape_4_3" alt="UI/UX设计课程" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-500">设计创意</span>
+                            <div class="flex items-center">
+                                <i class="fa fa-star text-yellow-400"></i>
+                                <span class="ml-1 font-medium">4.7</span>
+                                <span class="ml-1 text-gray-500">(654)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">UI/UX设计原理与实践</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-2">学习用户界面和用户体验设计原则，创建美观且易用的产品</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20instructor%20avatar%20creative&image_size=square" alt="讲师" class="w-10 h-10 rounded-full mr-3">
+                                <span class="font-medium">王设计师</span>
+                            </div>
+                            <span class="text-xl font-bold text-primary">¥249</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-center">
+                <a href="#" class="md:hidden px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors inline-block">
+                    查看全部
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习路径 -->
+    <section id="paths" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">结构化学习路径</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">按照精心设计的路径学习，循序渐进地掌握专业技能</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 学习路径 1 -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full"></div>
+                    <div class="relative z-10">
+                        <div class="bg-primary text-white p-4 rounded-lg inline-block mb-6">
+                            <i class="fa fa-code-fork text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">全栈开发工程师</h3>
+                        <p class="text-gray-600 mb-6">从前端到后端，全面掌握现代Web开发技术栈，成为全能型开发人才</p>
+                        <div class="mb-6">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">课程数量</span>
+                                <span>8门</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">学习时长</span>
+                                <span>120小时</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-medium">就业方向</span>
+                                <span>全栈开发工程师</span>
+                            </div>
+                        </div>
+                        <a href="#" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors inline-block font-medium">
+                            开始学习
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 学习路径 2 -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-8 relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary/10 rounded-full"></div>
+                    <div class="relative z-10">
+                        <div class="bg-secondary text-white p-4 rounded-lg inline-block mb-6">
+                            <i class="fa fa-database text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">数据科学家</h3>
+                        <p class="text-gray-600 mb-6">掌握数据分析、机器学习和人工智能技术，成为数据驱动决策的专家</p>
+                        <div class="mb-6">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">课程数量</span>
+                                <span>10门</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">学习时长</span>
+                                <span>150小时</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-medium">就业方向</span>
+                                <span>数据科学家</span>
+                            </div>
+                        </div>
+                        <a href="#" class="px-6 py-3 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors inline-block font-medium">
+                            开始学习
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学员评价 -->
+    <section id="testimonials" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">学员评价</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">听听我们的学员怎么说</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 评价 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=happy%20student%20avatar%20male&image_size=square" alt="学员" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">李明</h4>
+                            <p class="text-gray-500 text-sm">Web开发工程师</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600">"通过EduLearn的全栈开发课程，我成功转型为Web开发工程师。课程内容全面且实用，讲师讲解清晰，实践项目丰富，让我在短时间内掌握了所需技能。"</p>
+                </div>
+                
+                <!-- 评价 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=happy%20student%20avatar%20female&image_size=square" alt="学员" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">王芳</h4>
+                            <p class="text-gray-500 text-sm">数据分析师</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star-half-o text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600">"Python数据分析课程非常棒！从基础到高级，内容循序渐进，实战项目让我能够将所学知识应用到实际工作中。现在我已经能够独立完成数据分析任务了。"</p>
+                </div>
+                
+                <!-- 评价 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=happy%20student%20avatar%20young%20male&image_size=square" alt="学员" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">张伟</h4>
+                            <p class="text-gray-500 text-sm">UI设计师</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                        <i class="fa fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600">"UI/UX设计课程让我对设计有了全新的认识。课程内容涵盖了设计原理、工具使用和实战项目，讲师的指导非常专业，帮助我快速提升了设计技能。"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常见问题 -->
+    <section id="faq" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">常见问题</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">解答您可能有的疑问</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <!-- 问题 1 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-medium focus:outline-none">
+                            <span>如何开始学习课程？</span>
+                            <i class="fa fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-4 bg-gray-50 border-t">
+                            <p class="text-gray-600">只需注册账号，选择您感兴趣的课程，点击"开始学习"按钮即可。您可以根据自己的时间安排灵活学习，课程内容支持终身访问。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题 2 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-medium focus:outline-none">
+                            <span>课程是否提供证书？</span>
+                            <i class="fa fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-4 bg-gray-50 border-t">
+                            <p class="text-gray-600">是的，完成课程后您将获得课程结业证书。对于学习路径，完成所有课程后还将获得专业认证证书，这些证书可以添加到您的简历和LinkedIn个人资料中。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题 3 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-medium focus:outline-none">
+                            <span>如果对课程不满意可以退款吗？</span>
+                            <i class="fa fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-4 bg-gray-50 border-t">
+                            <p class="text-gray-600">我们提供30天无理由退款保证。如果您对课程不满意，可以在购买后30天内申请全额退款，无需说明理由。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题 4 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-4 text-left font-medium focus:outline-none">
+                            <span>如何获得学习支持？</span>
+                            <i class="fa fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-4 bg-gray-50 border-t">
+                            <p class="text-gray-600">我们提供多种学习支持方式，包括课程讨论区、邮件支持和定期直播答疑。您可以在学习过程中随时提问，我们的讲师和助教将及时为您解答。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 行动召唤 -->
+    <section class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">准备好开始您的学习之旅了吗？</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">加入我们的学习社区，与 thousands of 学员一起成长，掌握未来所需的技能</p>
+            <a href="#" class="px-8 py-4 bg-white text-primary rounded-lg hover:bg-gray-100 transition-colors inline-block font-bold text-lg">
+                立即注册
+            </a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- 公司信息 -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="bg-primary text-white p-2 rounded-lg">
+                            <i class="fa fa-graduation-cap text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold">EduLearn</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">提供高质量的在线课程，帮助您实现职业目标，掌握未来所需的技能。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 快速链接 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">快速链接</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">首页</a></li>
+                        <li><a href="#courses" class="text-gray-400 hover:text-white transition-colors">课程</a></li>
+                        <li><a href="#paths" class="text-gray-400 hover:text-white transition-colors">学习路径</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-white transition-colors">学员评价</a></li>
+                        <li><a href="#faq" class="text-gray-400 hover:text-white transition-colors">常见问题</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 课程分类 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">课程分类</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">编程开发</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">数据分析</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">设计创意</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">商业管理</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">更多分类</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 联系我们 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">联系我们</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">北京市海淀区中关村大街1号</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">400-123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">info@edulearn.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2026 EduLearn. 保留所有权利。</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">隐私政策</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">服务条款</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie 政策</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 常见问题折叠功能
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
